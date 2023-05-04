@@ -7,14 +7,6 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 mongoose.connect(process.env.MONGODB_URI).then(console.log('Connected to MongoDB'))
 
-// Or:
-// try {
-//   await mongoose.connect(process.env.MONGODB_URI)
-//   console.log('OK')
-// } catch (error) {
-//   handleError(error)
-// }
-
 const apiRoutes = require('./routes/api.js')
 const fccTestingRoutes = require('./routes/fcctesting.js')
 const runner = require('./test-runner')
