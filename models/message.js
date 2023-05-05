@@ -1,26 +1,13 @@
-// 'use strict'
 const mongoose = require('mongoose')
 
 // Create schema
 const messageSchema = new mongoose.Schema({
+  // test: mongoose.SchemaTypes.ObjectId,
   text: String,
-  password: String,
+  password: { type: String, required: true },
 })
+
 // Create model wrapper on schema
 const Message = mongoose.model('Message', messageSchema)
 
-// Create model
-const messageX = new Message({
-  text: 'test text',
-  password: 'aaaa',
-})
-messageX
-  .save()
-  .then((obj) => {
-    console.log(obj)
-  })
-  .catch((err) => {
-    console.error(err)
-  })
-
-module.exports = messageX
+module.exports = Message
