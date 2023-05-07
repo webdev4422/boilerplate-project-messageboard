@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 // Create schema
 const boardSchema = new mongoose.Schema({
-  name: String,
+  name: { type: String, unique: true, required: true, dropDups: true },
   threads: Array,
 })
 

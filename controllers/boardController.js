@@ -6,9 +6,14 @@ const createBoard = async (req, res) => {
     name: req.body.board,
     threads: [],
   })
+  console.log('ok')
   console.log(board)
+  board.updateOne({ _id: this._id }, { $push: { threads: { ok: 'ok' } } })
+  console.log('OK')
+  console.log(board)
+  res.json(board)
   // Redirect to get /b/:board
-  res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
+  // res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
 }
 
 // get: /api/threads/:board
