@@ -1,8 +1,8 @@
-const { postMessage, getMessages } = require('../controllers/messageController.js')
+const { createThread, viewThread } = require('../controllers/threadController.js')
 
 module.exports = async function (app) {
-  app.route('/api/threads/:board').post(postMessage)
-  app.route('/api/threads/:board').get(getMessages)
+  app.route('/api/threads/:board').post(createThread)
+  app.route('/api/threads/:board').get(viewThread)
 
   app.route('/api/replies/:board')
 }

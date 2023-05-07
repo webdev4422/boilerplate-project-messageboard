@@ -1,8 +1,8 @@
-const Message = require('../models/message.js')
+const Thread = require('../models/threadModel.js')
 
 // post: /api/threads/:board board=boardX; text=test; delete_password=aaaa
-const postMessage = async (req, res) => {
-  const message = await Message.create({
+const createThread = async (req, res) => {
+  const message = await Thread.create({
     text: req.body.text,
     password: req.body.delete_password,
     created_on: Date.now(),
@@ -16,14 +16,14 @@ const postMessage = async (req, res) => {
 
 // get: /api/threads/:board
 // Response: // [{"_id":"6456b218ad743174db9b6dd0","text":"testXXX","created_on":"2023-05-06T20:01:28.805Z","bumped_on":"2023-05-06T20:01:28.805Z","replies":[],"replycount":0}]
-const getMessages = async (req, res) => {
-  const message = await Message.find({})
+const viewThread = async (req, res) => {
+  const message = await Thread.find({})
   res.json(message)
 }
-module.exports = { postMessage, getMessages }
+module.exports = { createThread, viewThread }
 // app.route('/api/threads/general').post((app) => {
-// const messagesCollection = await Message.find()
+// const messagesCollection = await Thread.find()
 // console.log(messagesCollection)
 // })
 // Drop DB for test purpose
-// await Message.collection.drop()
+// await Thread.collection.drop()

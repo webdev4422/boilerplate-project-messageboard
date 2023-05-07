@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 // Create schema
-const messageSchema = new mongoose.Schema({
+const threadSchema = new mongoose.Schema({
   text: String,
   password: { type: String, required: true },
   created_on: Date,
@@ -11,4 +11,4 @@ const messageSchema = new mongoose.Schema({
 })
 
 // Create model wrapper on schema
-module.exports = mongoose.model('Message', messageSchema)
+module.exports = mongoose.model('Thread', threadSchema)
