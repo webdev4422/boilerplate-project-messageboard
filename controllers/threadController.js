@@ -21,9 +21,3 @@ const viewThread = async (req, res) => {
   res.json(message)
 }
 module.exports = { createThread, viewThread }
-// app.route('/api/threads/general').post((app) => {
-// const messagesCollection = await Thread.find()
-// console.log(messagesCollection)
-// })
-// Drop DB for test purpose
-// await Thread.collection.drop()
