@@ -1,8 +1,10 @@
-const { createBoard, viewBoard } = require('../controllers/boardController.js')
+const { createBoard, viewBoard, deleteThread } = require('../controllers/boardController.js')
 
 module.exports = async function (app) {
-  app.route('/api/threads/:board').post(createBoard)
-  app.route('/api/threads/:board').get(viewBoard)
+  app.route('/api/threads/:board')
+  .post(createBoard)
+  .get(viewBoard)
+  .delete(deleteThread)
   // app.route('/api/threads/:board').post(createThread)
   // app.route('/api/threads/:board').get(viewThread)
 

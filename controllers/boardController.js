@@ -20,7 +20,7 @@ const createBoard = async (req, res) => {
     // Update board with thread
     boardY[0].threads.push(threadX)
     await boardY[0].save()
-    console.log('Board updated with thread!')
+    console.log(`Thread created with id: ${threadX._id}`)
     // return res.json(boardY[0].threads.reverse())
     return res.redirect(303, `/b/${req.params.board}/`) // 303 parameter to make redirect work
   }
@@ -34,9 +34,7 @@ const createBoard = async (req, res) => {
     // Update board with thread
     boardX[0].threads.push(threadX)
     await boardX[0].save()
-    console.log('Board found and updated!')
-    // res.json(boardX)
-    // return
+    console.log('Board found and updated')
     // Redirect to get /b/:board
     return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
 
@@ -47,7 +45,6 @@ const createBoard = async (req, res) => {
       threads: [threadX],
     })
     console.log('Board created with thread')
-    // res.json(boardNew)
     // Redirect to get /b/:board
     return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
   }
@@ -57,12 +54,17 @@ const createBoard = async (req, res) => {
 // response: // [{"_id":"6456b218ad743174db9b6dd0","text":"testXXX","created_on":"2023-05-06T20:01:28.805Z","bumped_on":"2023-05-06T20:01:28.805Z","replies":[],"replycount":0}]
 const viewBoard = async (req, res) => {
   const boardX = await Board.find({ board: req.params.board })
+  console.log('View threads on board')
   // Response with array reverse sorted
-  // console.log(boardX[0].threads.reverse())
   res.json(boardX[0].threads.reverse())
 }
 
-// const createThread = async (req, res) => {}
+const deleteThread = async (req, res) => {
+  const threadX = await Thread.findOne({ _id: req.body.thread_id.toString() })
+  console.log(threadX)
+  console.log('Thread deleted')
+  res.send('success')
+}
 
 // Create reply var
 // const replyX = await Reply.create({
@@ -73,4 +75,4 @@ const viewBoard = async (req, res) => {
 // })
 // console.log(replyX)
 
-module.exports = { createBoard, viewBoard }
+module.exports = { createBoard, viewBoard, deleteThread }
