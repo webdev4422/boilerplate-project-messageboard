@@ -1,9 +1,9 @@
 const { Board, Thread, Reply } = require('../models/boardModel.js')
 
 // post: /api/threads/:board board=boardX; text=XXX; delete_password=aaaa
+// response: redirect to /b/:board and list all threads
 const createBoard = async (req, res) => {
-  // *** HOLD PROPS IN VARIABLES ***
-  // Create thread var
+  // Create thread to be pushed on board
   const threadX = await Thread.create({
     text: req.body.text,
     delete_password: req.body.delete_password,
@@ -13,16 +13,17 @@ const createBoard = async (req, res) => {
     replies: [],
     replycount: 0,
   })
-  // console.log(threadX)
-
-  // Create reply var
-  // const replyX = await Reply.create({
-  //   text: req.body.text,
-  //   delete_password: req.body.delete_password,
-  //   created_on: Date.now(),
-  //   reported: false,
-  // })
-  // console.log(replyX)
+  // Check if req.body.board exists if not, user should be on board already
+  if (!req.body.board) {
+    // Find board by url params NOT req.body.board
+    const boardY = await Board.find({ board: req.params.board })
+    // Update board with thread
+    boardY[0].threads.push(threadX)
+    await boardY[0].save()
+    console.log('Board updated with thread!')
+    // return res.json(boardY[0].threads.reverse())
+    return res.redirect(303, `/b/${req.params.board}/`) // 303 parameter to make redirect work
+  }
 
   // *** CREATE BOARD ***
   //*************************************************************************** */
@@ -53,13 +54,23 @@ const createBoard = async (req, res) => {
 }
 
 // get: /api/threads/:board
-// Response: // [{"_id":"6456b218ad743174db9b6dd0","text":"testXXX","created_on":"2023-05-06T20:01:28.805Z","bumped_on":"2023-05-06T20:01:28.805Z","replies":[],"replycount":0}]
+// response: // [{"_id":"6456b218ad743174db9b6dd0","text":"testXXX","created_on":"2023-05-06T20:01:28.805Z","bumped_on":"2023-05-06T20:01:28.805Z","replies":[],"replycount":0}]
 const viewBoard = async (req, res) => {
   const boardX = await Board.find({ board: req.params.board })
   // Response with array reverse sorted
-  console.log(boardX[0].threads.reverse())
+  // console.log(boardX[0].threads.reverse())
   res.json(boardX[0].threads.reverse())
-  // Redirect to get /b/:board
-  // return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
 }
+
+// const createThread = async (req, res) => {}
+
+// Create reply var
+// const replyX = await Reply.create({
+//   text: req.body.text,
+//   delete_password: req.body.delete_password,
+//   created_on: Date.now(),
+//   reported: false,
+// })
+// console.log(replyX)
+
 module.exports = { createBoard, viewBoard }

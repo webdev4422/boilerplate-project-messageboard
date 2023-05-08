@@ -4,11 +4,11 @@
     "colId": "history",
     "containerId": "",
     "name": "/api/threads/:board",
-    "url": "http://127.0.0.1:3000/api/threads/boardX",
+    "url": "http://127.0.0.1:3000/api/threads/s",
     "method": "POST",
     "sortNum": 0,
     "created": "2023-05-06T20:07:00.554Z",
-    "modified": "2023-05-08T09:24:11.812Z",
+    "modified": "2023-05-08T10:02:13.887Z",
     "headers": [],
     "params": [],
     "body": {
@@ -17,7 +17,8 @@
       "form": [
         {
           "name": "board",
-          "value": "s"
+          "value": "s",
+          "isDisabled": true
         },
         {
           "name": "text",
