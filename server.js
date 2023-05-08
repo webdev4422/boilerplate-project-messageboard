@@ -3,6 +3,8 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const helmet = require('helmet')
+
 // MongoDB - mongoose connection
 const mongoose = require('mongoose')
 mongoose.connect(process.env.MONGODB_URI).then(console.log('Connected to MongoDB'))
@@ -12,6 +14,11 @@ const fccTestingRoutes = require('./routes/fcctesting.js')
 const runner = require('./test-runner')
 
 const app = express()
+
+// Configure security options: no iframe externally, no dns prefetch, and only same-origin referrer
+app.use(helmet.frameguard({ action: 'sameorigin' }))
+app.use(helmet.dnsPrefetchControl({ allow: false }))
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }))
 
 app.use('/public', express.static(process.cwd() + '/public'))
 
