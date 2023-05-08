@@ -19,8 +19,7 @@ const createBoard = async (req, res) => {
   if (boardX.length > 0) {
     boardX[0].threads.push(thread) // push thread onto board
     // Redirect to get /b/:board
-    res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
-    return
+    return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
   }
   // Create board and push thread
   const board = await Board.create({
@@ -28,7 +27,7 @@ const createBoard = async (req, res) => {
     threads: [thread],
   })
   // Redirect to get /b/:board
-  res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
+  return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
 }
 
 // get: /api/threads/:board
