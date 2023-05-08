@@ -8,7 +8,7 @@
     "method": "POST",
     "sortNum": 0,
     "created": "2023-05-06T20:07:00.554Z",
-    "modified": "2023-05-08T09:09:46.772Z",
+    "modified": "2023-05-08T09:24:11.812Z",
     "headers": [],
     "params": [],
     "body": {
@@ -17,7 +17,7 @@
       "form": [
         {
           "name": "board",
-          "value": "testasd"
+          "value": "s"
         },
         {
           "name": "text",

@@ -30,14 +30,14 @@ const createBoard = async (req, res) => {
   const boardX = await Board.find({ board: req.body.board }) // return array
   // If exists -> response with this board
   if (boardX.length > 0) {
-    // Update board
+    // Update board with thread
     boardX[0].threads.push(threadX)
     await boardX[0].save()
     console.log('Board found and updated!')
-    res.json(boardX)
-    return
+    // res.json(boardX)
+    // return
     // Redirect to get /b/:board
-    // return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
+    return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
 
     // If not exists -> create new board
   } else {
@@ -45,21 +45,21 @@ const createBoard = async (req, res) => {
       board: req.body.board,
       threads: [threadX],
     })
-    console.log(boardNew)
     console.log('Board created with thread')
-    res.json(boardNew)
+    // res.json(boardNew)
     // Redirect to get /b/:board
-    // return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
+    return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
   }
 }
 
 // get: /api/threads/:board
 // Response: // [{"_id":"6456b218ad743174db9b6dd0","text":"testXXX","created_on":"2023-05-06T20:01:28.805Z","bumped_on":"2023-05-06T20:01:28.805Z","replies":[],"replycount":0}]
 const viewBoard = async (req, res) => {
-  console.log(req.params.board)
   const boardX = await Board.find({ board: req.params.board })
-  // console.log(boardX)
-  res.json(boardX)
-  // res.json('ok')
+  // Response with array reverse sorted
+  console.log(boardX[0].threads.reverse())
+  res.json(boardX[0].threads.reverse())
+  // Redirect to get /b/:board
+  // return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
 }
 module.exports = { createBoard, viewBoard }
