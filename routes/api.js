@@ -1,4 +1,5 @@
-const { getThread, postThread, putThread, deleteThread, getReply, postReply, putReply, deleteReply } = require('../controllers/boardController.js')
+const { getThread, postThread, putThread, deleteThread } = require('../controllers/threadController.js')
+const { getReply, postReply, putReply, deleteReply } = require('../controllers/replyController.js')
 
 module.exports = async function (app) {
   // create routes for manipulating threads
