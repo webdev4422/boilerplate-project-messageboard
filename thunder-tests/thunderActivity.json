@@ -8,7 +8,7 @@
     "method": "DELETE",
     "sortNum": 0,
     "created": "2023-05-06T20:07:00.554Z",
-    "modified": "2023-05-08T10:30:31.375Z",
+    "modified": "2023-05-08T11:12:24.519Z",
     "headers": [],
     "params": [],
     "body": {
@@ -17,7 +17,7 @@
       "form": [
         {
           "name": "thread_id",
-          "value": "6458cf3fe1e76ca5a6b0c38b"
+          "value": "6458d90a153be09f10013a53"
         },
         {
           "name": "delete_password",

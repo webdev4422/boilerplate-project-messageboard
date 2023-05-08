@@ -3,6 +3,7 @@ const { Board, Thread, Reply } = require('../models/boardModel.js')
 // post: /api/threads/:board board=boardX; text=XXX; delete_password=aaaa
 // response: redirect to /b/:board and list all threads
 const createBoard = async (req, res) => {
+  // *** CREATE THREAD***
   // Create thread to be pushed on board
   const threadX = await Thread.create({
     text: req.body.text,
@@ -21,7 +22,6 @@ const createBoard = async (req, res) => {
     boardY[0].threads.push(threadX)
     await boardY[0].save()
     console.log(`Thread created with id: ${threadX._id}`)
-    // return res.json(boardY[0].threads.reverse())
     return res.redirect(303, `/b/${req.params.board}/`) // 303 parameter to make redirect work
   }
 
@@ -36,7 +36,7 @@ const createBoard = async (req, res) => {
     await boardX[0].save()
     console.log('Board found and updated')
     // Redirect to get /b/:board
-    return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
+    return res.redirect(303, `/b/${req.body.board}/`)
 
     // If not exists -> create new board
   } else {
@@ -46,7 +46,7 @@ const createBoard = async (req, res) => {
     })
     console.log('Board created with thread')
     // Redirect to get /b/:board
-    return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
+    return res.redirect(303, `/b/${req.body.board}/`)
   }
 }
 
@@ -61,9 +61,20 @@ const viewBoard = async (req, res) => {
 
 const deleteThread = async (req, res) => {
   const threadX = await Thread.findOne({ _id: req.body.thread_id.toString() })
-  console.log(threadX)
-  console.log('Thread deleted')
-  res.send('success')
+
+  if (threadX) {
+    if (req.body.delete_password === threadX.delete_password) {
+      await threadX.deleteOne()
+      console.log(`Deleted thread with id: ${threadX._id}`)
+      res.send('success')
+    } else {
+      console.log('incorrect password')
+      res.send('incorrect password')
+    }
+  } else {
+    console.log(`No thread found`)
+    res.send('No thread found')
+  }
 }
 
 // Create reply var
