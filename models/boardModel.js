@@ -1,35 +1,27 @@
 const mongoose = require('mongoose')
+const { Schema } = mongoose
 
-// Create reply schema
-const replySchema = new mongoose.Schema({
-  text: String,
-  delete_password: { type: String, required: true },
+// Reply Schema - object for storing thread replies as a subdocument of Thread models
+const ReplySchema = new Schema({
+  text: { type: String, required: true },
   created_on: { type: Date, default: Date.now, required: true },
+  delete_password: { type: String, required: true },
   reported: { type: Boolean, default: false },
 })
-// Create model wrapper on schema
-const Reply = mongoose.model('Reply', replySchema)
 
-// Create thread schema
-const threadSchema = new mongoose.Schema({
+// Thread Schema - object for storing threads as a document in mongoose database
+const ThreadSchema = new Schema({
+  board: { type: String, required: true },
   text: { type: String, required: true },
-  delete_password: { type: String, required: true },
   created_on: { type: Date, default: Date.now, required: true },
   bumped_on: { type: Date, default: Date.now, required: true },
+  delete_password: { type: String, required: true },
   reported: { type: Boolean, default: false },
-  replies: [replySchema],
-  replycount: Number,
+  replies: [ReplySchema],
 })
-// Create model wrapper on schema
-const Thread = mongoose.model('Thread', threadSchema)
 
-// Create board schema
-const boardSchema = new mongoose.Schema({
-  board: { type: String, required: true, unique: true, dropDups: true },
-  threads: [threadSchema],
-})
-// Create model wrapper on schema
-const Board = mongoose.model('Board', boardSchema)
+// Create Thread and Reply models for creating database objects
+const Thread = mongoose.model('Thread', ThreadSchema)
+const Reply = mongoose.model('Reply', ReplySchema)
 
-// Export models
-module.exports = { Board, Thread, Reply }
+module.exports = { Thread, Reply }
