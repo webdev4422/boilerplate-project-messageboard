@@ -4,11 +4,11 @@
     "colId": "history",
     "containerId": "",
     "name": "Thread /api/threads/:board",
-    "url": "http://127.0.0.1:3000/api/threads/s",
+    "url": "http://127.0.0.1:3000/api/threads/boardX",
     "method": "PUT",
     "sortNum": 0,
     "created": "2023-05-06T20:07:00.554Z",
-    "modified": "2023-05-08T11:22:02.850Z",
+    "modified": "2023-05-08T15:54:35.337Z",
     "headers": [],
     "params": [],
     "body": {
@@ -17,7 +17,7 @@
       "form": [
         {
           "name": "report_id",
-          "value": "6458db4c69fa732d6802f32a"
+          "value": "64591b30ea4050eba73faa3b"
         },
         {
           "name": "delete_password",
@@ -33,11 +33,11 @@
     "colId": "history",
     "containerId": "",
     "name": "/api/threads/:board",
-    "url": "http://127.0.0.1:3000/api/threads/test",
+    "url": "http://127.0.0.1:3000/api/threads/boardX",
     "method": "GET",
     "sortNum": 0,
     "created": "2023-05-06T20:07:00.554Z",
-    "modified": "2023-05-08T08:11:50.405Z",
+    "modified": "2023-05-08T15:40:14.225Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -47,11 +47,11 @@
     "colId": "history",
     "containerId": "",
     "name": "Board /api/threads/:board",
-    "url": "http://127.0.0.1:3000/api/threads/s",
+    "url": "http://127.0.0.1:3000/api/threads/test",
     "method": "POST",
     "sortNum": 0,
     "created": "2023-05-06T20:07:00.554Z",
-    "modified": "2023-05-08T10:13:12.550Z",
+    "modified": "2023-05-08T15:39:54.599Z",
     "headers": [],
     "params": [],
     "body": {
@@ -60,7 +60,7 @@
       "form": [
         {
           "name": "board",
-          "value": "s"
+          "value": "test"
         },
         {
           "name": "text",
@@ -79,22 +79,17 @@
     "colId": "history",
     "containerId": "",
     "name": "Thread /api/threads/:board",
-    "url": "http://127.0.0.1:3000/api/threads/s",
+    "url": "http://127.0.0.1:3000/api/threads/boardX",
     "method": "POST",
     "sortNum": 0,
     "created": "2023-05-06T20:07:00.554Z",
-    "modified": "2023-05-08T10:02:13.887Z",
+    "modified": "2023-05-08T15:40:23.630Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "formencoded",
       "raw": "",
       "form": [
-        {
-          "name": "board",
-          "value": "s",
-          "isDisabled": true
-        },
         {
           "name": "text",
           "value": "XXXtest"
@@ -112,11 +107,11 @@
     "colId": "history",
     "containerId": "",
     "name": "Thread /api/threads/:board",
-    "url": "http://127.0.0.1:3000/api/threads/s",
+    "url": "http://127.0.0.1:3000/api/threads/boardX",
     "method": "DELETE",
     "sortNum": 0,
     "created": "2023-05-06T20:07:00.554Z",
-    "modified": "2023-05-08T11:12:24.519Z",
+    "modified": "2023-05-08T15:40:41.005Z",
     "headers": [],
     "params": [],
     "body": {
@@ -125,7 +120,7 @@
       "form": [
         {
           "name": "thread_id",
-          "value": "6458d90a153be09f10013a53"
+          "value": "6458e87ddb64faab22d18f7a"
         },
         {
           "name": "delete_password",

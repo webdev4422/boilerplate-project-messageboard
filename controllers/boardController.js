@@ -18,6 +18,15 @@ const createBoardAndThread = async (req, res) => {
   if (!req.body.board) {
     // Find board by url params NOT req.body.board
     const boardY = await Board.find({ board: req.params.board })
+    if (boardY.length == 0) {
+      const boardNew = await Board.create({
+        board: req.params.board,
+        threads: [],
+      })
+      console.log(`Board created: ${req.params.board}`)
+      return res.redirect(303, `/b/${req.params.board}/`)
+    }
+
     // Update board with thread
     boardY[0].threads.push(threadX)
     await boardY[0].save()
@@ -54,6 +63,14 @@ const createBoardAndThread = async (req, res) => {
 // response: // [{"_id":"6456b218ad743174db9b6dd0","text":"testXXX","created_on":"2023-05-06T20:01:28.805Z","bumped_on":"2023-05-06T20:01:28.805Z","replies":[],"replycount":0}]
 const viewBoard = async (req, res) => {
   const boardX = await Board.find({ board: req.params.board })
+  if (boardX.length == 0) {
+    const boardNew = await Board.create({
+      board: req.params.board,
+      threads: [],
+    })
+    console.log(`Board created: ${req.params.board}`)
+    return res.redirect(303, `/b/${req.params.board}/`)
+  }
   console.log(`View threads on board: ${req.params.board}`)
   // Response with array reverse sorted
   res.json(boardX[0].threads.reverse())
@@ -79,8 +96,8 @@ const deleteThread = async (req, res) => {
 
 // put: /api/thread/:board report_id=6458d90a153be09f10013a53
 const reportThread = async (req, res) => {
-  const threadX = await Thread.findOne({ _id: req.body.report_id.toString() })
-  if (threadX) {
+  if (req.body.report_id > 0) {
+    const threadX = await Thread.findOne({ _id: req.body.report_id.toString() })
     threadX.reported = true
     await threadX.save()
     console.log(`Reported thread id: ${threadX._id}`)
