@@ -2,7 +2,8 @@ const { Board, Thread, Reply } = require('../models/boardModel.js')
 
 // post: /api/threads/:board board=boardX; text=XXX; delete_password=aaaa
 const createBoard = async (req, res) => {
-  // // Create thread
+  // *** HOLD PROPS IN VARIABLES ***
+  // Create thread var
   const threadX = await Thread.create({
     text: req.body.text,
     delete_password: req.body.delete_password,
@@ -14,12 +15,26 @@ const createBoard = async (req, res) => {
   })
   // console.log(threadX)
 
+  // Create reply var
+  // const replyX = await Reply.create({
+  //   text: req.body.text,
+  //   delete_password: req.body.delete_password,
+  //   created_on: Date.now(),
+  //   reported: false,
+  // })
+  // console.log(replyX)
+
   // *** CREATE BOARD ***
+  //*************************************************************************** */
   // Check if board exists
   const boardX = await Board.find({ board: req.body.board }) // return array
   // If exists -> response with this board
   if (boardX.length > 0) {
-    // console.log(boardX)
+    console.log(boardX)
+    // Update board
+    // boardX[0].threads.push(threadX)
+    // await boardX.save()
+    console.log(boardX)
     console.log('found')
     res.json(boardX)
 
