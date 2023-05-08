@@ -1,11 +1,10 @@
 'use strict'
 const { Reply, Thread } = require('../models/boardModel.js')
-
 const bcrypt = require('bcrypt')
 const { ObjectId } = require('mongodb')
 
 // thread get request - returns with json object containing at max 10 threads, and 3 replies each, hiding password and reported fields
-const getThread = async function((req, res) => {
+const getThread = async (req, res) => {
   // get board name from URL
   const board = req.params.board
   let results = []
@@ -27,12 +26,13 @@ const getThread = async function((req, res) => {
       })
 
       // Send json response with data
+      console.log(`getThread view thrads: ${results.length}`)
       return res.json(results)
     })
-})
+}
 
 // thread post request - creates a new thread when supplied with text and password - response with the thread
-postThread((req, res) => {
+const postThread = async (req, res) => {
   // get data from URL and the body of the request
   const board = req.params.board
   const { text, delete_password } = req.body
@@ -43,8 +43,8 @@ postThread((req, res) => {
       if (err) {
         return res.send(err)
       }
-
       // on success send json response with thread object
+      console.log(`postThread created: ${obj._id}`)
       return res.json(obj)
     })
 
@@ -52,10 +52,10 @@ postThread((req, res) => {
   } else {
     return res.send('missing required fields')
   }
-})
+}
 
 // Thread put request - reports a thread, responds with the string reported on success
-putThread((req, res) => {
+const putThread = async (req, res) => {
   // get data from URL and the body of the request
   const board = req.params.board
   let thread_id = req.body.thread_id
@@ -75,6 +75,7 @@ putThread((req, res) => {
         return res.send(err)
       } // report any errors
       if (obj) {
+        console.log(`putThread reported id: ${thread_id}`)
         return res.send('reported')
       } // if object is returned, respond with string 'success'
       else {
@@ -86,10 +87,10 @@ putThread((req, res) => {
   } else {
     return res.send('missing required field')
   }
-})
+}
 
 // thread delete request - delete thread with supplied id and password- responds with success on completion
-deleteThread((req, res) => {
+const deleteThread = async (req, res) => {
   // get data from URL and the body of the request
   const board = req.params.board
   let { thread_id, delete_password } = req.body
@@ -117,6 +118,7 @@ deleteThread((req, res) => {
           if (err) {
             return res.send(err)
           } else {
+            console.log(`deleteThred id: ${thread_id}`)
             return res.send('success')
           } // if no error, respond with string 'success'
         })
@@ -131,10 +133,10 @@ deleteThread((req, res) => {
   } else {
     return res.send('missing required fields')
   }
-})
+}
 
 // reply get request - retried a single thread with all replies - responds with the thread with replies
-getReply((req, res) => {
+const getReply = async (req, res) => {
   // get data from url and query variables
   const board = req.params.board
   let thread_id = req.query.thread_id
@@ -167,10 +169,10 @@ getReply((req, res) => {
   } else {
     return res.send('missing required fields')
   }
-})
+}
 
 // reply post request - create new reply given thread id, text and password - response with reply json object and updates bumped date
-postReply((req, res) => {
+const postReply = async (req, res) => {
   // get data from url and request body
   const board = req.params.board
   let { text, delete_password, thread_id } = req.body
@@ -211,10 +213,10 @@ postReply((req, res) => {
   } else {
     return res.send('missing required fields')
   }
-})
+}
 
 // reply put requests - updates the reported field on reply to true - response with text 'reported'
-putReply((req, res) => {
+const putReply = async (req, res) => {
   // get data from urls and request body
   const board = req.params.board
   let { thread_id, reply_id } = req.body
@@ -263,10 +265,10 @@ putReply((req, res) => {
   } else {
     return res.send('missing required field')
   }
-})
+}
 
 // reply delete request - marks reply as deleted - responds with success
-deleteReply((req, res) => {
+const deleteReply = async (req, res) => {
   // get data from URL and request body
   const board = req.params.board
   let { thread_id, reply_id, delete_password } = req.body
@@ -321,7 +323,6 @@ deleteReply((req, res) => {
   } else {
     return res.send('missing required fields')
   }
-})
+}
 
-module.exports = { getThread, postThread, putThread, deleteThread }
-// With best regards to https://github.com/kinome79/FCC-Message-Board
+module.exports = { getThread, postThread, putThread, deleteThread, getReply, postReply, putReply, deleteReply }

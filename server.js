@@ -7,6 +7,9 @@ const helmet = require('helmet')
 
 // MongoDB - mongoose connection
 const mongoose = require('mongoose')
+// [MONGOOSE] DeprecationWarning: Mongoose: the `strictQuery` option will be switched back to `false` by default in Mongoose 7. Use `mongoose.set('strictQuery', false);` if you want to prepare for this change. Or use `mongoose.set('strictQuery', true);` to suppress this warning.
+mongoose.set('strictQuery', false)
+// Connect to MongoDB
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(console.log('Connected to MongoDB'))

@@ -8,7 +8,7 @@
     "method": "PUT",
     "sortNum": 0,
     "created": "2023-05-06T20:07:00.554Z",
-    "modified": "2023-05-08T15:54:35.337Z",
+    "modified": "2023-05-08T16:59:52.868Z",
     "headers": [],
     "params": [],
     "body": {
@@ -16,13 +16,12 @@
       "raw": "",
       "form": [
         {
-          "name": "report_id",
-          "value": "64591b30ea4050eba73faa3b"
+          "name": "thread_id",
+          "value": "64592a66e8007df68e0d8186"
         },
         {
           "name": "delete_password",
-          "value": "aaaa",
-          "isDisabled": true
+          "value": "aaaa"
         }
       ]
     },
@@ -47,11 +46,11 @@
     "colId": "history",
     "containerId": "",
     "name": "Board /api/threads/:board",
-    "url": "http://127.0.0.1:3000/api/threads/test",
+    "url": "http://127.0.0.1:3000/api/threads/boardX",
     "method": "POST",
     "sortNum": 0,
     "created": "2023-05-06T20:07:00.554Z",
-    "modified": "2023-05-08T15:39:54.599Z",
+    "modified": "2023-05-08T16:51:09.824Z",
     "headers": [],
     "params": [],
     "body": {
@@ -60,7 +59,7 @@
       "form": [
         {
           "name": "board",
-          "value": "test"
+          "value": "boardX"
         },
         {
           "name": "text",
@@ -111,7 +110,7 @@
     "method": "DELETE",
     "sortNum": 0,
     "created": "2023-05-06T20:07:00.554Z",
-    "modified": "2023-05-08T15:40:41.005Z",
+    "modified": "2023-05-08T16:59:07.970Z",
     "headers": [],
     "params": [],
     "body": {
@@ -120,7 +119,7 @@
       "form": [
         {
           "name": "thread_id",
-          "value": "6458e87ddb64faab22d18f7a"
+          "value": "64592a56821c84413f20e69b"
         },
         {
           "name": "delete_password",
