@@ -1,39 +1,54 @@
-const Board = require('../models/boardModel.js')
-const Thread = require('../models/threadModel.js')
-const { createThread, viewThread } = require('../controllers/threadController.js')
+const { Board, Thread, Reply } = require('../models/boardModel.js')
 
-// post: /api/threads/:board board=boardX; text=test; delete_password=aaaa
+// post: /api/threads/:board board=boardX; text=XXX; delete_password=aaaa
 const createBoard = async (req, res) => {
-  // Create thread
-  const thread = await Thread.create({
+  // // Create thread
+  const threadX = await Thread.create({
     text: req.body.text,
-    password: req.body.delete_password,
+    delete_password: req.body.delete_password,
     created_on: Date.now(),
     bumped_on: Date.now(),
+    reported: false,
     replies: [],
     replycount: 0,
   })
+  // console.log(threadX)
 
-  // Check if board exist
-  const boardX = await Board.find({ name: req.body.board }) // return array
+  // *** CREATE BOARD ***
+  // Check if board exists
+  const boardX = await Board.find({ board: req.body.board }) // return array
+  // If exists -> response with this board
   if (boardX.length > 0) {
-    boardX[0].threads.push(thread) // push thread onto board
+    // console.log(boardX)
+    console.log('found')
+    res.json(boardX)
+
+    // return
+    // boardX[0].threads.push(thread) // push thread onto board
     // Redirect to get /b/:board
-    return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
+    // return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
+
+    // If not exists -> create new board
+  } else {
+    const boardX = await Board.create({
+      board: req.body.board,
+      threads: [threadX],
+    })
+    console.log(boardX)
+    console.log('created')
+    res.json(boardX)
+    // Redirect to get /b/:board
+    // return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
   }
-  // Create board and push thread
-  const board = await Board.create({
-    name: req.body.board,
-    threads: [thread],
-  })
-  // Redirect to get /b/:board
-  return res.redirect(303, `/b/${req.body.board}/`) // 303 parameter to make redirect work
 }
 
 // get: /api/threads/:board
 // Response: // [{"_id":"6456b218ad743174db9b6dd0","text":"testXXX","created_on":"2023-05-06T20:01:28.805Z","bumped_on":"2023-05-06T20:01:28.805Z","replies":[],"replycount":0}]
 const viewBoard = async (req, res) => {
-  const board = await Board.find({ name: req.body.board })
-  res.json(board)
+  console.log(req.params.board)
+  const boardX = await Board.find({ board: req.params.board })
+  // console.log(boardX)
+  res.json(boardX)
+  // res.json('ok')
 }
 module.exports = { createBoard, viewBoard }

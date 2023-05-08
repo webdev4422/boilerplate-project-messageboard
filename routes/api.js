@@ -1,4 +1,3 @@
-const { createThread, viewThread } = require('../controllers/threadController.js')
 const { createBoard, viewBoard } = require('../controllers/boardController.js')
 
 module.exports = async function (app) {
