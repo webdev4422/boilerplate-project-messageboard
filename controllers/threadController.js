@@ -1,7 +1,12 @@
 'use strict'
 const { Reply, Thread } = require('../models/boardModel.js')
-const bcrypt = require('bcrypt')
+// const bcrypt = require('bcrypt')
+const crypto = require('crypto')
 const { ObjectId } = require('mongodb')
+
+// 61be55a8e2f6b4e172338bddf184d6dbee29c98853e0a0485ecee7f27b9af0b4 crypto hex hash
+// Yb5VqOL2tOFyM4vd8YTW2+4pyYhT4KBIXs7n8nua8LQ= crypto base64 hash
+// $2b$04$dpjCeUOt8mR2NecY1pZVU.lLR16ssBEhZ6Tdq7ImVn5Vm/R6dNhBa bcrypt hash
 
 const ThreadController = class {
   // thread get request - returns with json object containing at max 10 threads, and 3 replies each, hiding password and reported fields
@@ -40,7 +45,8 @@ const ThreadController = class {
 
     // if data is present, create the thread with hashed password
     if (text && delete_password) {
-      Thread.create({ board: board, text: text, delete_password: bcrypt.hashSync(delete_password, 4) }, (err, obj) => {
+      // Thread.create({ board: board, text: text, delete_password: bcrypt.hashSync(delete_password, 4) }, (err, obj) => {
+      Thread.create({ board: board, text: text, delete_password: crypto.createHash('sha256').update(delete_password).digest('base64') }, (err, obj) => {
         if (err) {
           return res.send(err)
         }
@@ -114,12 +120,13 @@ const ThreadController = class {
         } // if no thread returned, respond with 'invalid board/id'
 
         // if retrieved threads password matches the supplied password, delete thread
-        if (bcrypt.compareSync(delete_password, thread.delete_password)) {
+        // if (bcrypt.compareSync(delete_password, thread.delete_password)) {
+        if (crypto.createHash('sha256').update(delete_password).digest('base64') === thread.delete_password) {
           thread.delete((err) => {
             if (err) {
               return res.send(err)
             } else {
-              console.log(`deleteThred id: ${thread_id}`)
+              console.log(`deleteThred id: ${thread_id} with hashed password: ${thread.delete_password}`)
               return res.send('success')
             } // if no error, respond with string 'success'
           })
